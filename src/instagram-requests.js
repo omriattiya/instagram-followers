@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const config = require('./user.config.json');
+const config = require('../user.config.json');
 
 const REQUEST_HEADERS = {headers: {cookie: config.cookie}};
 
