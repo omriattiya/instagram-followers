@@ -13,7 +13,7 @@ export function Follower({username, fullName, profilePicUrl, type}) {
         <div className={'inline'}>
             <div className={['user-wrapper', type].join(' ')}>
             <div className={'details-section'}>
-                <a href={generateProfileLink()} target={'_blank'} className={'username'}>{username}</a>
+                <a href={generateProfileLink()} target={'_blank'} rel="noopener noreferrer" className={'username'}>{username}</a>
                 <div className={'full-name'}>{fullName || <>&nbsp;</>}</div>
             </div>
             <div>

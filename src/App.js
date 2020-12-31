@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {instagramRequests} from "./services/instagramRequests";
 import {localStorage} from "./services/localStorage";
 import {Section} from "./components/section/Section";
-import {follower} from "./stories/Follower.stories";
 
 const loadAnyway = false;
 const shouldSave = true;
@@ -15,6 +14,7 @@ function App() {
         following: [],
         diff: []
     });
+
 
     useEffect(() => {
         (async () => {
@@ -39,6 +39,7 @@ function App() {
                 diff: findDiff(instagram.followers, instagram.following)
             });
         })();
+
     }, []);
 
     function findDiff(followers, followings) {
