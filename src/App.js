@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {instagramRequests} from "./instagramRequests";
+import {instagramRequests} from "./services/instagramRequests";
+import {localStorage} from "./services/localStorage";
 
 function App() {
 
@@ -8,9 +9,19 @@ function App() {
 
     useEffect(() => {
         (async () => {
-            let instagram = await instagramRequests.getFollowersAndFollowing();
-            setFollowers(instagram.followers || []);
-            setFollowing(instagram.following || []);
+            let instagram = {
+                followers: localStorage.loadFollowers(),
+                following: localStorage.loadFollowing()
+            }
+
+            if(!instagram.following.length && !instagram.followers.length) {
+                instagram = await instagramRequests.getFollowersAndFollowing();
+                localStorage.saveFollowers(instagram.followers)
+                localStorage.saveFollowing(instagram.following)
+            }
+
+            setFollowers(instagram.followers);
+            setFollowing(instagram.following);
         })();
     }, []);
 
