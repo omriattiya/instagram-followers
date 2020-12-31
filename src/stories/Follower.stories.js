@@ -1,5 +1,5 @@
 import React from 'react';
-import {Follower} from "../components/Follower";
+import {Follower} from "../components/follower/Follower";
 
 export default {
     title: 'Example/Follower',

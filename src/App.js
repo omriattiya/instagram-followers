@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {instagramRequests} from "./services/instagramRequests";
 import {localStorage} from "./services/localStorage";
-import {Follower} from "./components/Follower";
+import {Follower} from "./components/follower/Follower";
 
 const USER_TYPE = {FOLLOWER: 'follower', FOLLOWING: 'following'}
 
