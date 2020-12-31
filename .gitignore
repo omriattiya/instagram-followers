@@ -1,5 +1,5 @@
 # config file - DO NOT UPDATE IT BECAUSE OTHER PEOPLE WILL USE IT AGAINST YOU
-user.config.json
+src/user.config.json
 
 # Logs
 logs
