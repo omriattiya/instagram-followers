@@ -55,6 +55,6 @@
     border-color: #3eb500;
 }
 
-.following .profile-pic:hover {
+.diff .profile-pic:hover {
     border-color: red;
 }
