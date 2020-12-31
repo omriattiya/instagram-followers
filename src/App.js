@@ -9,8 +9,8 @@ function App() {
     useEffect(() => {
         (async () => {
             let instagram = await instagramRequests.getFollowersAndFollowing();
-            setFollowers(instagram?.followers || []);
-            setFollowing(instagram?.following || []);
+            setFollowers(instagram.followers || []);
+            setFollowing(instagram.following || []);
         })();
     }, []);
 
