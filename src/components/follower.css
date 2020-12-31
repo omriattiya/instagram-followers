@@ -1,0 +1,56 @@
+.user-wrapper {
+    width: 300px;
+    border-radius: 20px;
+    margin: 10px;
+    padding: 10px 15px;
+    border: 3px solid;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: space-between;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.picture-section {
+
+}
+
+.details-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.username {
+    color: black;
+    font-weight: bolder;
+    font-size: 1.2em;
+}
+
+.full-name {
+    color: #727272;
+}
+
+.follower {
+    border-color: #5cc8fa;
+}
+
+.following {
+    border-color: #3eb500;
+}
+
+.profile-pic {
+    border-radius: 35px;
+    border: 5px solid lightgray;
+    width: 50px;
+}
+
+.follower .profile-pic:hover {
+    border-color: #5cc8fa;
+}
+
+.following .profile-pic:hover {
+    border-color: #3eb500;
+}

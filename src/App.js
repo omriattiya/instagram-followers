@@ -1,6 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {instagramRequests} from "./services/instagramRequests";
 import {localStorage} from "./services/localStorage";
+import {Follower} from "./components/Follower";
+
+const USER_TYPE = {FOLLOWER: 'follower', FOLLOWING: 'following'}
+
+const loadAnyway = false;
+const shouldSave = true;
 
 function App() {
 
@@ -14,10 +20,12 @@ function App() {
                 following: localStorage.loadFollowing()
             }
 
-            if(!instagram.following.length && !instagram.followers.length) {
+            if (loadAnyway || (!instagram.following.length && !instagram.followers.length)) {
                 instagram = await instagramRequests.getFollowersAndFollowing();
-                localStorage.saveFollowers(instagram.followers)
-                localStorage.saveFollowing(instagram.following)
+                if (shouldSave) {
+                    localStorage.saveFollowers(instagram.followers)
+                    localStorage.saveFollowing(instagram.following)
+                }
             }
 
             setFollowers(instagram.followers);
@@ -27,13 +35,28 @@ function App() {
 
     return (
         <div>
-          {
-            followers.map(follower => (
-                <div key={follower.username}>
-                  {follower.username}
-                </div>
-            ))
-          }
+            {
+                followers.map(user => (
+                    <Follower
+                        username={user.username}
+                        fullName={user.fullName}
+                        profilePicUrl={user.profilePicUrl}
+                        type={USER_TYPE.FOLLOWER}
+                        key={user.username}
+                    />
+                ))
+            }
+            {
+                following.map(user => (
+                    <Follower
+                        username={user.username}
+                        fullName={user.full_name}
+                        profilePicUrl={user.profilePicUrl}
+                        type={USER_TYPE.FOLLOWING}
+                        key={user.username}
+                    />
+                ))
+            }
         </div>
     );
 }
