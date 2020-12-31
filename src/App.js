@@ -1,23 +1,27 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {instagramRequests} from "./services/instagramRequests";
 import {localStorage} from "./services/localStorage";
-import {Follower} from "./components/follower/Follower";
-
-const USER_TYPE = {FOLLOWER: 'follower', FOLLOWING: 'following'}
+import {Section} from "./components/section/Section";
+import {follower} from "./stories/Follower.stories";
 
 const loadAnyway = false;
 const shouldSave = true;
+const USER_TYPE = {FOLLOWER: 'follower', FOLLOWING: 'following', DIFF: 'diff'}
 
 function App() {
 
-    let [followers, setFollowers] = useState([]);
-    let [following, setFollowing] = useState([]);
+    let [instafollow, setInstafollow] = useState({
+        followers: [],
+        following: [],
+        diff: []
+    });
 
     useEffect(() => {
         (async () => {
             let instagram = {
                 followers: localStorage.loadFollowers(),
-                following: localStorage.loadFollowing()
+                following: localStorage.loadFollowing(),
+                diff: localStorage.loadDiff()
             }
 
             if (loadAnyway || (!instagram.following.length && !instagram.followers.length)) {
@@ -25,38 +29,42 @@ function App() {
                 if (shouldSave) {
                     localStorage.saveFollowers(instagram.followers)
                     localStorage.saveFollowing(instagram.following)
+                    localStorage.saveDiff(findDiff(instagram.followers, instagram.following))
                 }
             }
 
-            setFollowers(instagram.followers);
-            setFollowing(instagram.following);
+            setInstafollow({
+                followers: instagram.followers,
+                following: instagram.following,
+                diff: findDiff(instagram.followers, instagram.following)
+            });
         })();
     }, []);
 
+    function findDiff(followers, followings) {
+        let followersStr = followers.map(v => JSON.stringify(v));
+        let followingStr = followings.map(v => JSON.stringify(v));
+        return followingStr.filter(follower => !followersStr.includes(follower)).map(v => JSON.parse(v));
+    }
+
     return (
         <div>
-            {
-                followers.map(user => (
-                    <Follower
-                        username={user.username}
-                        fullName={user.fullName}
-                        profilePicUrl={user.profilePicUrl}
-                        type={USER_TYPE.FOLLOWER}
-                        key={user.username}
-                    />
-                ))
-            }
-            {
-                following.map(user => (
-                    <Follower
-                        username={user.username}
-                        fullName={user.full_name}
-                        profilePicUrl={user.profilePicUrl}
-                        type={USER_TYPE.FOLLOWING}
-                        key={user.username}
-                    />
-                ))
-            }
+            <Section
+                title={`Don't Follow Back`}
+                followersList={instafollow.diff}
+                type={USER_TYPE.DIFF}
+            />
+            <Section
+                title={'Followers'}
+                followersList={instafollow.followers}
+                type={USER_TYPE.FOLLOWER}
+            />
+            <Section
+                title={'Following'}
+                followersList={instafollow.following}
+                type={USER_TYPE.FOLLOWING}
+            />
+
         </div>
     );
 }
