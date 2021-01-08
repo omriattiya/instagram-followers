@@ -1,0 +1,14 @@
+.reload-button-container {
+    margin: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.loader-spinner {
+    position: absolute;
+    left: 50%;
+    margin-left: -75px;
+    top: 50%;
+    margin-top: -75px;
+}
