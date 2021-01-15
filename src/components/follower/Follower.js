@@ -16,11 +16,10 @@ export function Follower({username, fullName, profilePicUrl, type, isNew = false
                     <a href={generateProfileLink()}
                        target={'_blank'}
                        rel="noopener noreferrer"
-                       className={'username'}
-                       tooltip={username}>
+                       className={'username'}>
                         {username}
                     </a>
-                    <div className={'full-name'} tooltip={fullName}>{fullName || <>&nbsp;</>}</div>
+                    <div className={'full-name'}>{fullName || <>&nbsp;</>}</div>
                 </div>
                 <div>
                     <img className={'profile-pic ' + type} src={profilePicUrl} alt={'profile pic'}/>
