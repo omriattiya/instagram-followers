@@ -15,7 +15,7 @@ follower.args = {
     username: 'some user name',
     fullName: 'עמרי הגבר',
     type: 'follower',
-    profilePicUrl: PROFILE_PIC_URL
+    profilePicUrl: PROFILE_PIC_URL,
 };
 
 export const following = Template.bind({});
@@ -24,4 +24,13 @@ following.args = {
     fullName: 'עמרי הגבר',
     type: 'following',
     profilePicUrl: PROFILE_PIC_URL
+};
+
+export const newUser = Template.bind({});
+newUser.args = {
+    username: 'some user name that is a very log name',
+    fullName: 'עמרי הגבר אבל ממש ממש ארוך כדי לבדוק משהו',
+    type: 'following',
+    profilePicUrl: PROFILE_PIC_URL,
+    isNew: true
 };
