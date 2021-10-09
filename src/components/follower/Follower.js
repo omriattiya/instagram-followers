@@ -22,7 +22,7 @@ export function Follower({username, fullName, profilePicUrl, type, isNew = false
                     <div className={'full-name'}>{fullName || <>&nbsp;</>}</div>
                 </div>
                 <div>
-                    <img className={'profile-pic ' + type} src={profilePicUrl} alt={'profile pic'}/>
+                    <img className={'profile-pic ' + type} src="/favicon.ico" alt={'profile pic'}/>
                 </div>
                 {
                     isNew &&
