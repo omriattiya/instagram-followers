@@ -9,26 +9,26 @@ export function Section({title, followersList, type}) {
     const toggleShowContent = () => setShowContent(!showContent);
 
     return (
-        <div>
+        <div className="section">
             <div
                 className="title"
                 onClick={toggleShowContent}
             >
                 {`${title} (${followersList.length})`}
             </div>
-            <hr/>
             {
-                showContent &&
-                followersList.map(user => (
-                    <Follower
-                        username={user.username}
-                        fullName={user.fullName}
-                        profilePicUrl={user.profilePicUrl}
-                        type={type}
-                        isNew={user.isNew}
-                        key={user.username}
-                    />
-                ))
+                showContent && (
+                    followersList.map(user => (
+                        <Follower
+                            username={user.username}
+                            fullName={user.fullName}
+                            profilePicUrl={user.profilePicUrl}
+                            type={type}
+                            isNew={user.isNew}
+                            key={user.username}
+                        />
+                    ))
+                )
             }
         </div>)
 }
