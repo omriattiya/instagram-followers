@@ -1,6 +1,7 @@
 const FOLLOWERS_KEY = 'followers';
 const FOLLOWING_KEY = 'following';
-const DIFF_KEY = 'diff';
+const DIFF_FOLLOWING_THAT_ARE_NOT_FOLLOWERS_KEY = 'followingThatAreNotFollowers';
+const DIFF_FOLLOWERS_THAT_ARE_NOT_FOLLOWING_KEY = 'followersThatAreNotFollowing';
 
 
 export const localStorage = (function () {
@@ -9,10 +10,12 @@ export const localStorage = (function () {
     return {
         saveFollowers,
         saveFollowing,
-        saveDiff,
+        saveFollowingThatAreNotFollowers,
+        saveFollowersThatAreNotFollowing,
         loadFollowers,
         loadFollowing,
-        loadDiff
+        loadFollowingThatAreNotFollowers,
+        loadFollowersThatAreNotFollowing
     }
 
     function saveFollowers(followers) {
@@ -23,8 +26,12 @@ export const localStorage = (function () {
         localStorage.setItem(FOLLOWING_KEY, JSON.stringify(following));
     }
 
-    function saveDiff(diff) {
-        localStorage.setItem(DIFF_KEY, JSON.stringify(diff));
+    function saveFollowingThatAreNotFollowers(diff) {
+        localStorage.setItem(DIFF_FOLLOWING_THAT_ARE_NOT_FOLLOWERS_KEY, JSON.stringify(diff));
+    }
+
+    function saveFollowersThatAreNotFollowing(diff) {
+        localStorage.setItem(DIFF_FOLLOWERS_THAT_ARE_NOT_FOLLOWING_KEY, JSON.stringify(diff));
     }
 
     function loadFollowers() {
@@ -35,8 +42,12 @@ export const localStorage = (function () {
         return JSON.parse(localStorage.getItem(FOLLOWING_KEY)) || [];
     }
 
-    function loadDiff() {
-        return JSON.parse(localStorage.getItem(DIFF_KEY)) || [];
+    function loadFollowingThatAreNotFollowers() {
+        return JSON.parse(localStorage.getItem(DIFF_FOLLOWING_THAT_ARE_NOT_FOLLOWERS_KEY)) || [];
+    }
+
+    function loadFollowersThatAreNotFollowing() {
+        return JSON.parse(localStorage.getItem(DIFF_FOLLOWERS_THAT_ARE_NOT_FOLLOWING_KEY)) || [];
     }
 
 })();

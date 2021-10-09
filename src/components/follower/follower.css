@@ -47,8 +47,12 @@
     border-color: #3eb500;
 }
 
-.diff {
+.followingThatAreNotFollowers {
     border-color: red;
+}
+
+.followersThatAreNotFollowing {
+    border-color: mediumpurple;
 }
 
 .profile-pic {
