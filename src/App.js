@@ -11,7 +11,8 @@ const shouldSave = true;
 const USER_TYPE = {
     FOLLOWER: 'follower',
     FOLLOWING: 'following',
-    FOLLOWING_THAT_ARE_NOT_FOLLOWERS: 'followingThatAreNotFollowers'
+    FOLLOWING_THAT_ARE_NOT_FOLLOWERS: 'followingThatAreNotFollowers',
+    FOLLOWERS_THAT_ARE_NOT_FOLLOWING: 'followersThatAreNotFollowing',
 };
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
     let [instafollow, setInstafollow] = useState({
         followers: [],
         following: [],
-        followingThatAreNotFollowers: []
+        followingThatAreNotFollowers: [],
+        followersThatAreNotFollowing: []
     });
 
     let [isLoading, setIsLoading] = useState(false);
@@ -29,7 +31,8 @@ function App() {
         let instagram = {
             followers: localStorage.loadFollowers(),
             following: localStorage.loadFollowing(),
-            followingThatAreNotFollowers: localStorage.loadFollowingThatAreNotFollowers()
+            followingThatAreNotFollowers: localStorage.loadFollowingThatAreNotFollowers(),
+            followersThatAreNotFollowing: localStorage.loadFollowersThatAreNotFollowing(),
         }
         clearNewFlag(instagram);
         if (loadAnyway || (!instagram.following.length && !instagram.followers.length)) {
@@ -38,40 +41,45 @@ function App() {
             setInstafollow({
                 followers: instagram.followers,
                 following: instagram.following,
-                followingThatAreNotFollowers: instagram.followingThatAreNotFollowers
+                followingThatAreNotFollowers: instagram.followingThatAreNotFollowers,
+                followersThatAreNotFollowing: instagram.followersThatAreNotFollowing,
             });
             setIsLoading(false);
         }
     }, []);
 
-    function clearNewFlag({followers, following, followingThatAreNotFollowers}) {
+    function clearNewFlag({followers, following, followingThatAreNotFollowers, followersThatAreNotFollowing}) {
         const clearNew = user => user.isNew = false;
-        [...followers, ...following, ...followingThatAreNotFollowers].forEach(clearNew);
+        [...followers, ...following, ...followingThatAreNotFollowers, ...followersThatAreNotFollowing].forEach(clearNew);
     }
 
-    function setNewUsers({followers, following, followingThatAreNotFollowers}) {
+    function setNewUsers({followers, following, followingThatAreNotFollowers, followersThatAreNotFollowing}) {
         let newFollowers = findDiffRight(instafollow.followers, followers);
         let newFollowing = findDiffRight(instafollow.following, following);
         let newFollowingThatAreNotFollowers = findDiffRight(instafollow.followingThatAreNotFollowers, followingThatAreNotFollowers);
+        let newFollowersThatAreNotFollowing = findDiffRight(instafollow.followersThatAreNotFollowing, followersThatAreNotFollowing);
 
         const setNewFlag = user => user.isNew = true;
-        [...newFollowers, ...newFollowing, ...newFollowingThatAreNotFollowers].forEach(setNewFlag);
+        [...newFollowers, ...newFollowing, ...newFollowingThatAreNotFollowers, ...newFollowersThatAreNotFollowing].forEach(setNewFlag);
     }
 
     async function loadFromInstagram(instagram) {
         setIsLoading(true);
         instagram = await instagramRequests.getFollowersAndFollowing();
         instagram.followingThatAreNotFollowers = findDiffRight(instagram.followers, instagram.following);
+        instagram.followersThatAreNotFollowing = findDiffRight(instagram.following, instagram.followers);
         setNewUsers(instagram);
         if (shouldSave) {
             localStorage.saveFollowers(instagram.followers)
             localStorage.saveFollowing(instagram.following)
-            localStorage.saveFollowingThatAreNotFollowers(instagram.followingThatAreNotFollowers)
+            localStorage.saveFollowingThatAreNotFollowers(instagram.followingThatAreNotFollowers);
+            localStorage.saveFollowersThatAreNotFollowing(instagram.followersThatAreNotFollowing);
         }
         setInstafollow({
             followers: instagram.followers,
             following: instagram.following,
-            followingThatAreNotFollowers: instagram.followingThatAreNotFollowers
+            followingThatAreNotFollowers: instagram.followingThatAreNotFollowers,
+            followersThatAreNotFollowing: instagram.followersThatAreNotFollowing,
         });
         setIsLoading(false);
     }
@@ -105,6 +113,11 @@ function App() {
                             title={'Following'}
                             followersList={instafollow.following}
                             type={USER_TYPE.FOLLOWING}
+                        />
+                        <Section
+                            title={'I Don\'t Follow Back'}
+                            followersList={instafollow.followersThatAreNotFollowing}
+                            type={USER_TYPE.FOLLOWERS_THAT_ARE_NOT_FOLLOWING}
                         />
                     </div>
                 )
