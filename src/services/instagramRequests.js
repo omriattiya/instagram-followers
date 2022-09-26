@@ -1,3 +1,5 @@
+import {config} from "../config";
+
 export const instagramRequests = (function () {
 
     return {
@@ -6,7 +8,7 @@ export const instagramRequests = (function () {
 
     async function getFollowersAndFollowing() {
         try {
-            return (await fetch(`http://192.168.1.25:8080/api/instagram`)).json();
+            return (await fetch(`http://${config.INSTAGRAM_FOLLOWERS_BACKEND}/api/instagram`)).json();
         } catch (err) {
             return {followers: [], following: []}
         }
