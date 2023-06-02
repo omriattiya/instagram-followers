@@ -5,11 +5,3 @@
     bottom: 0;
     z-index: 999;
 }
-
-.loader-spinner {
-    position: absolute;
-    left: 50%;
-    margin-left: -75px;
-    top: 50%;
-    margin-top: -75px;
-}
