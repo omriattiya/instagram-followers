@@ -118,14 +118,16 @@ function App() {
             <div className={'reload-button-container'}>
                 <ReloadButton isLoading={isLoading} reload={loadFromInstagram}/>
             </div>
-            {sections.map(section => (
-                <Section
-                    key={section.title}
-                    title={section.title}
-                    followersList={section.followersList}
-                    type={section.type}
-                />
-            ))}
+            <div>
+                {sections.map(section => (
+                    <Section
+                        key={section.title}
+                        title={section.title}
+                        followersList={section.followersList}
+                        type={section.type}
+                    />
+                ))}
+            </div>
         </>
     );
 }
