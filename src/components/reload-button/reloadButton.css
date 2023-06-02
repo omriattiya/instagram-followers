@@ -18,12 +18,8 @@
     filter: brightness(1.1);
 }
 
-#reload:hover:not:disabled {
-    background-color: white;
-    color: #1ea7fd;
-    border: 2px solid #1ea7fd;
-}
-
 #reload:disabled {
-    filter: brightness(0.7) saturate(0);
+    background: white;
+    border: 2px solid #1ea7fd;
+    padding: 10px;
 }
