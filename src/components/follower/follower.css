@@ -12,6 +12,18 @@
     width: 20vw;
 }
 
+.user-wrapper * {
+    transition: 0.2s;
+}
+
+.user-wrapper:hover * {
+    color: white;
+}
+
+.user-link {
+    text-decoration: none;
+}
+
 .inline {
     display: inline-block;
 }
@@ -43,22 +55,42 @@
     border-color: #5cc8fa;
 }
 
+.user-wrapper:hover.follower {
+    background: #5cc8fa;
+}
+
 .following, .following .profile-pic:hover {
     border-color: #3eb500;
+}
+
+.user-wrapper:hover.following {
+    background: #3eb500;
 }
 
 .followingThatAreNotFollowers, .followingThatAreNotFollowers .profile-pic:hover {
     border-color: red;
 }
 
+.user-wrapper:hover.followingThatAreNotFollowers {
+    background: red;
+}
+
 .followersThatAreNotFollowing, .followersThatAreNotFollowing .profile-pic:hover {
     border-color: mediumpurple;
+}
+
+.user-wrapper:hover.followersThatAreNotFollowing {
+    background: mediumpurple;
 }
 
 .profile-pic {
     border-radius: 35px;
     border: 5px solid lightgray;
     width: 50px;
+}
+
+.user-wrapper:hover .profile-pic {
+    border-color: white;
 }
 
 .new-user {
