@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react';
-import Loader from 'react-loader-spinner'
+import React, {useEffect, useMemo, useState} from 'react';
 import {instagramRequests} from "./services/instagramRequests";
 import {localStorage} from "./services/localStorage";
 import {Section} from "./components/section/Section";
@@ -48,6 +47,29 @@ function App() {
         }
     }, []);
 
+    const sections = useMemo(() => ([
+        {
+            title: 'Don\'t Follow Back',
+            followersList: instafollow.followingThatAreNotFollowers,
+            type: USER_TYPE.FOLLOWING_THAT_ARE_NOT_FOLLOWERS,
+        },
+        {
+            title: 'Followers',
+            followersList: instafollow.followers,
+            type: USER_TYPE.FOLLOWER,
+        },
+        {
+            title: 'Following',
+            followersList: instafollow.following,
+            type: USER_TYPE.FOLLOWING,
+        },
+        {
+            title: 'I Don\'t Follow Back',
+            followersList: instafollow.followersThatAreNotFollowing,
+            type: USER_TYPE.FOLLOWERS_THAT_ARE_NOT_FOLLOWING,
+        },
+    ]), [instafollow]);
+
     function clearNewFlag({followers, following, followingThatAreNotFollowers, followersThatAreNotFollowing}) {
         const clearNew = user => user.isNew = false;
         [...followers, ...following, ...followingThatAreNotFollowers, ...followersThatAreNotFollowing].forEach(clearNew);
@@ -92,43 +114,19 @@ function App() {
     }
 
     return (
-        <div>
+        <>
             <div className={'reload-button-container'}>
                 <ReloadButton isLoading={isLoading} reload={loadFromInstagram}/>
             </div>
-            {!isLoading ?
-                (
-                    <div>
-                        <Section
-                            title={`Don't Follow Back`}
-                            followersList={instafollow.followingThatAreNotFollowers}
-                            type={USER_TYPE.FOLLOWING_THAT_ARE_NOT_FOLLOWERS}
-                        />
-                        <Section
-                            title={'Followers'}
-                            followersList={instafollow.followers}
-                            type={USER_TYPE.FOLLOWER}
-                        />
-                        <Section
-                            title={'Following'}
-                            followersList={instafollow.following}
-                            type={USER_TYPE.FOLLOWING}
-                        />
-                        <Section
-                            title={'I Don\'t Follow Back'}
-                            followersList={instafollow.followersThatAreNotFollowing}
-                            type={USER_TYPE.FOLLOWERS_THAT_ARE_NOT_FOLLOWING}
-                        />
-                    </div>
-                )
-                :
-                (
-                    <div className={'loader-spinner'}>
-                        <Loader type="Oval" color="#00BFFF" height={150} width={150}/>
-                    </div>
-                )
-            }
-        </div>
+            {sections.map(section => (
+                <Section
+                    key={section.title}
+                    title={section.title}
+                    followersList={section.followersList}
+                    type={section.type}
+                />
+            ))}
+        </>
     );
 }
 
