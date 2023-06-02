@@ -11,27 +11,27 @@ export function Follower({username, fullName, profilePicUrl, type, isNew = false
 
     return (
         <div className={'inline'}>
-            <div className={['user-wrapper', type].join(' ')}>
-                <div className={'details-section'}>
-                    <a href={generateProfileLink()}
-                       target={'_blank'}
-                       rel="noopener noreferrer"
-                       className={'username'}>
-                        {username}
-                    </a>
-                    <div className={'full-name'}>{fullName || <>&nbsp;</>}</div>
-                </div>
-                <div>
-                    <img className={'profile-pic ' + type} src="/favicon.ico" alt={'profile pic'}/>
-                </div>
-                {
-                    isNew &&
-                    <div className={'new-user'}>
-                        new!
+            <a href={generateProfileLink()}
+               target={'_blank'}
+               rel="noopener noreferrer"
+               className="user-link"
+            >
+                <div className={['user-wrapper', type].join(' ')}>
+                    <div className={'details-section'}>
+                        <div className={'username'}>{username}</div>
+                        <div className={'full-name'}>{fullName || <>&nbsp;</>}</div>
                     </div>
-                }
-            </div>
-
+                    <div>
+                        <img className={'profile-pic ' + type} src="/favicon.ico" alt={'profile pic'}/>
+                    </div>
+                    {
+                        isNew &&
+                        <div className={'new-user'}>
+                            new!
+                        </div>
+                    }
+                </div>
+            </a>
         </div>
     )
 }
