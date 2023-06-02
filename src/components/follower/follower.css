@@ -10,6 +10,7 @@
     position: relative;
     user-select: auto;
     width: 20vw;
+    transition: 0.2s;
 }
 
 .user-wrapper * {
