@@ -92,10 +92,7 @@ function App() {
         instagram.followersThatAreNotFollowing = findDiffRight(instagram.following, instagram.followers);
         setNewUsers(instagram);
         if (shouldSave) {
-            localStorage.saveFollowers(instagram.followers)
-            localStorage.saveFollowing(instagram.following)
-            localStorage.saveFollowingThatAreNotFollowers(instagram.followingThatAreNotFollowers);
-            localStorage.saveFollowersThatAreNotFollowing(instagram.followersThatAreNotFollowing);
+            localStorage.saveInstagramFollowers(instagram);
         }
         setInstafollow({
             followers: instagram.followers,

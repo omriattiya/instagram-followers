@@ -15,7 +15,8 @@ export const localStorage = (function () {
         loadFollowers,
         loadFollowing,
         loadFollowingThatAreNotFollowers,
-        loadFollowersThatAreNotFollowing
+        loadFollowersThatAreNotFollowing,
+        saveInstagramFollowers,
     }
 
     function saveFollowers(followers) {
@@ -50,4 +51,10 @@ export const localStorage = (function () {
         return JSON.parse(localStorage.getItem(DIFF_FOLLOWERS_THAT_ARE_NOT_FOLLOWING_KEY)) || [];
     }
 
+    function saveInstagramFollowers(instagram) {
+        saveFollowers(instagram.followers)
+        saveFollowing(instagram.following)
+        saveFollowingThatAreNotFollowers(instagram.followingThatAreNotFollowers);
+        saveFollowersThatAreNotFollowing(instagram.followersThatAreNotFollowing);
+    }
 })();
