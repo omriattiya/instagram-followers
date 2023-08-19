@@ -4,23 +4,12 @@ import {localStorage} from "./services/localStorage";
 import {Section} from "./components/section/Section";
 import {ReloadButton} from "./components/reload-button/ReloadButton";
 import './app.css';
-
-const loadAnyway = false;
-const shouldSave = true;
-const USER_TYPE = {
-    FOLLOWER: 'follower',
-    FOLLOWING: 'following',
-    FOLLOWING_THAT_ARE_NOT_FOLLOWERS: 'followingThatAreNotFollowers',
-    FOLLOWERS_THAT_ARE_NOT_FOLLOWING: 'followersThatAreNotFollowing',
-};
+import {USER_TYPE} from "./cosnts/userTypes";
 
 function App() {
 
     let [instafollow, setInstafollow] = useState({
-        followers: [],
-        following: [],
-        followingThatAreNotFollowers: [],
-        followersThatAreNotFollowing: []
+        followers: [], following: [], followingThatAreNotFollowers: [], followersThatAreNotFollowing: []
     });
 
     let [isLoading, setIsLoading] = useState(false);
@@ -34,7 +23,7 @@ function App() {
             followersThatAreNotFollowing: localStorage.loadFollowersThatAreNotFollowing(),
         }
         clearNewFlag(instagram);
-        if (loadAnyway || (!instagram.following.length && !instagram.followers.length)) {
+        if (!instagram.following.length && !instagram.followers.length) {
             loadFromInstagram(instagram);
         } else {
             setInstafollow({
@@ -47,28 +36,19 @@ function App() {
         }
     }, []);
 
-    const sections = useMemo(() => ([
-        {
-            title: 'Don\'t Follow Back',
-            followersList: instafollow.followingThatAreNotFollowers,
-            type: USER_TYPE.FOLLOWING_THAT_ARE_NOT_FOLLOWERS,
-        },
-        {
-            title: 'Followers',
-            followersList: instafollow.followers,
-            type: USER_TYPE.FOLLOWER,
-        },
-        {
-            title: 'Following',
-            followersList: instafollow.following,
-            type: USER_TYPE.FOLLOWING,
-        },
-        {
-            title: 'I Don\'t Follow Back',
-            followersList: instafollow.followersThatAreNotFollowing,
-            type: USER_TYPE.FOLLOWERS_THAT_ARE_NOT_FOLLOWING,
-        },
-    ]), [instafollow]);
+    const sections = useMemo(() => ([{
+        title: 'Don\'t Follow Back',
+        followersList: instafollow.followingThatAreNotFollowers,
+        type: USER_TYPE.FOLLOWING_THAT_ARE_NOT_FOLLOWERS,
+    }, {
+        title: 'Followers', followersList: instafollow.followers, type: USER_TYPE.FOLLOWER,
+    }, {
+        title: 'Following', followersList: instafollow.following, type: USER_TYPE.FOLLOWING,
+    }, {
+        title: 'I Don\'t Follow Back',
+        followersList: instafollow.followersThatAreNotFollowing,
+        type: USER_TYPE.FOLLOWERS_THAT_ARE_NOT_FOLLOWING,
+    },]), [instafollow]);
 
     function clearNewFlag({followers, following, followingThatAreNotFollowers, followersThatAreNotFollowing}) {
         const clearNew = user => user.isNew = false;
@@ -91,9 +71,7 @@ function App() {
         instagram.followingThatAreNotFollowers = findDiffRight(instagram.followers, instagram.following);
         instagram.followersThatAreNotFollowing = findDiffRight(instagram.following, instagram.followers);
         setNewUsers(instagram);
-        if (shouldSave) {
-            localStorage.saveInstagramFollowers(instagram);
-        }
+        localStorage.saveInstagramFollowers(instagram);
         setInstafollow({
             followers: instagram.followers,
             following: instagram.following,
@@ -110,23 +88,19 @@ function App() {
         return followersGroup2.filter(user => diffUsers.includes(user.username));
     }
 
-    return (
-        <>
-            <div className={'reload-button-container'}>
-                <ReloadButton isLoading={isLoading} reload={loadFromInstagram}/>
-            </div>
-            <div>
-                {sections.map(section => (
-                    <Section
-                        key={section.title}
-                        title={section.title}
-                        followersList={section.followersList}
-                        type={section.type}
-                    />
-                ))}
-            </div>
-        </>
-    );
+    return (<>
+        <div className={'reload-button-container'}>
+            <ReloadButton isLoading={isLoading} reload={loadFromInstagram}/>
+        </div>
+        <div>
+            {sections.map(section => (<Section
+                key={section.title}
+                title={section.title}
+                followersList={section.followersList}
+                type={section.type}
+            />))}
+        </div>
+    </>);
 }
 
 export default App;
