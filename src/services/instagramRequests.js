@@ -1,5 +1,6 @@
 import {config} from "../config";
 import {instagramUsers} from '../devData/instagramUsersTest.js';
+import {formatInstagramUsers} from "./instagramUsersFormatter";
 
 export const instagramRequests = (function () {
 
@@ -12,9 +13,10 @@ export const instagramRequests = (function () {
             return {followers: instagramUsers, following: []};
         }
         try {
-            return (await fetch(`${config.INSTAGRAM_FOLLOWERS_BACKEND}/api/instagram`)).json();
+            const instagramUsers = await (await fetch(`${config.INSTAGRAM_FOLLOWERS_BACKEND}/api/instagram`)).json();
+            return formatInstagramUsers(instagramUsers);
         } catch (err) {
-            return {followers: [], following: []}
+            return formatInstagramUsers({});
         }
     }
 

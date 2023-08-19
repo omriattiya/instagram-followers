@@ -5,6 +5,7 @@ import {Section} from "./components/section/Section";
 import {ReloadButton} from "./components/reload-button/ReloadButton";
 import './app.css';
 import {USER_TYPE} from "./cosnts/userTypes";
+import {instagramUsersUtils} from "./services/instagramUsersUtils";
 
 function App() {
 
@@ -51,10 +52,10 @@ function App() {
     }
 
     function setNewUsers({followers, following, followingThatAreNotFollowers, followersThatAreNotFollowing}) {
-        let newFollowers = findDiffRight(instafollow.followers, followers);
-        let newFollowing = findDiffRight(instafollow.following, following);
-        let newFollowingThatAreNotFollowers = findDiffRight(instafollow.followingThatAreNotFollowers, followingThatAreNotFollowers);
-        let newFollowersThatAreNotFollowing = findDiffRight(instafollow.followersThatAreNotFollowing, followersThatAreNotFollowing);
+        let newFollowers = instagramUsersUtils.findUsersDiff(instafollow.followers, followers);
+        let newFollowing = instagramUsersUtils.findUsersDiff(instafollow.following, following);
+        let newFollowingThatAreNotFollowers = instagramUsersUtils.findUsersDiff(instafollow.followingThatAreNotFollowers, followingThatAreNotFollowers);
+        let newFollowersThatAreNotFollowing = instagramUsersUtils.findUsersDiff(instafollow.followersThatAreNotFollowing, followersThatAreNotFollowing);
 
         const setNewFlag = user => user.isNew = true;
         [...newFollowers, ...newFollowing, ...newFollowingThatAreNotFollowers, ...newFollowersThatAreNotFollowing].forEach(setNewFlag);
@@ -63,8 +64,6 @@ function App() {
     async function loadFromInstagram() {
         setIsLoading(true);
         const instagram = await instagramRequests.getFollowersAndFollowing();
-        instagram.followingThatAreNotFollowers = findDiffRight(instagram.followers, instagram.following);
-        instagram.followersThatAreNotFollowing = findDiffRight(instagram.following, instagram.followers);
         setNewUsers(instagram);
         localStorage.saveInstagramFollowers(instagram);
         setInstafollow({
@@ -76,12 +75,6 @@ function App() {
         setIsLoading(false);
     }
 
-    function findDiffRight(followersGroup1, followersGroup2) {
-        let group1Users = followersGroup1.map(user => user.username);
-        let group2Users = followersGroup2.map(user => user.username);
-        let diffUsers = group2Users.filter(username => !group1Users.includes(username));
-        return followersGroup2.filter(user => diffUsers.includes(user.username));
-    }
 
     return (<>
         <div className={'reload-button-container'}>
