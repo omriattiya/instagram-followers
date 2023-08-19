@@ -8,15 +8,8 @@ export const localStorage = (function () {
     const localStorage = window.localStorage;
 
     return {
-        saveFollowers,
-        saveFollowing,
-        saveFollowingThatAreNotFollowers,
-        saveFollowersThatAreNotFollowing,
-        loadFollowers,
-        loadFollowing,
-        loadFollowingThatAreNotFollowers,
-        loadFollowersThatAreNotFollowing,
         saveInstagramFollowers,
+        loadInstagramUsers,
     }
 
     function saveFollowers(followers) {
@@ -56,5 +49,14 @@ export const localStorage = (function () {
         saveFollowing(instagram.following)
         saveFollowingThatAreNotFollowers(instagram.followingThatAreNotFollowers);
         saveFollowersThatAreNotFollowing(instagram.followersThatAreNotFollowing);
+    }
+
+    function loadInstagramUsers() {
+        return {
+            followers: loadFollowers(),
+            following: loadFollowing(),
+            followingThatAreNotFollowers: loadFollowingThatAreNotFollowers(),
+            followersThatAreNotFollowing: loadFollowersThatAreNotFollowing(),
+        }
     }
 })();

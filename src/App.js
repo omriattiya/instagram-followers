@@ -16,12 +16,7 @@ function App() {
 
     useEffect(() => {
         setIsLoading(true);
-        let instagram = {
-            followers: localStorage.loadFollowers(),
-            following: localStorage.loadFollowing(),
-            followingThatAreNotFollowers: localStorage.loadFollowingThatAreNotFollowers(),
-            followersThatAreNotFollowing: localStorage.loadFollowersThatAreNotFollowing(),
-        }
+        const instagram = localStorage.loadInstagramUsers();
         clearNewFlag(instagram);
         if (!instagram.following.length && !instagram.followers.length) {
             loadFromInstagram(instagram);
