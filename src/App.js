@@ -51,14 +51,8 @@ function App() {
         [...followers, ...following, ...followingThatAreNotFollowers, ...followersThatAreNotFollowing].forEach(clearNew);
     }
 
-    function setNewUsers({followers, following, followingThatAreNotFollowers, followersThatAreNotFollowing}) {
-        let newFollowers = instagramUsersUtils.findUsersDiff(instafollow.followers, followers);
-        let newFollowing = instagramUsersUtils.findUsersDiff(instafollow.following, following);
-        let newFollowingThatAreNotFollowers = instagramUsersUtils.findUsersDiff(instafollow.followingThatAreNotFollowers, followingThatAreNotFollowers);
-        let newFollowersThatAreNotFollowing = instagramUsersUtils.findUsersDiff(instafollow.followersThatAreNotFollowing, followersThatAreNotFollowing);
-
-        const setNewFlag = user => user.isNew = true;
-        [...newFollowers, ...newFollowing, ...newFollowingThatAreNotFollowers, ...newFollowersThatAreNotFollowing].forEach(setNewFlag);
+    function setNewUsers(oldFollowers) {
+        instagramUsersUtils.getNewUsers(oldFollowers, instafollow).forEach(user => user.isNew = true);
     }
 
     async function loadFromInstagram() {
