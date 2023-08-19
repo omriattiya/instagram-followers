@@ -70,19 +70,21 @@ function App() {
     }
 
 
-    return (<>
-        <div className="reload-button-container">
-            <ReloadButton isLoading={isLoading} reload={loadFromInstagram}/>
-        </div>
-        <div>
-            {sections.map(section => (<Section
-                key={section.title}
-                title={section.title}
-                followersList={section.followersList}
-                type={section.type}
-            />))}
-        </div>
-    </>);
+    return (
+        <>
+            <div className="reload-button-container">
+                <ReloadButton isLoading={isLoading} reload={loadFromInstagram}/>
+            </div>
+            <div>
+                {sections.map(section => (<Section
+                    key={section.title}
+                    title={section.title}
+                    followersList={section.followersList}
+                    type={section.type}
+                />))}
+            </div>
+        </>
+    );
 }
 
 export default App;
