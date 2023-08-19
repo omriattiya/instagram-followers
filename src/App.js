@@ -71,7 +71,7 @@ function App() {
 
 
     return (<>
-        <div className={'reload-button-container'}>
+        <div className="reload-button-container">
             <ReloadButton isLoading={isLoading} reload={loadFromInstagram}/>
         </div>
         <div>
