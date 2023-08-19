@@ -6,14 +6,25 @@ import {ReloadButton} from "./components/reload-button/ReloadButton";
 import './app.css';
 import {USER_TYPE} from "./cosnts/userTypes";
 import {instagramUsersUtils} from "./services/instagramUsersUtils";
+import {
+    Content,
+    InstagramUserTypeButton,
+    NavBar,
+    ReloadContainer,
+    ScreenWrapper,
+    SectionWrapper,
+    Title
+} from "./styled";
 
 function App() {
 
-    let [instafollow, setInstafollow] = useState({
+    const [instafollow, setInstafollow] = useState({
         followers: [], following: [], followingThatAreNotFollowers: [], followersThatAreNotFollowing: []
     });
 
-    let [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [selectedSection, setSelectedSection] = useState(null);
 
     useEffect(() => {
         setIsLoading(true);
@@ -70,21 +81,35 @@ function App() {
     }
 
 
-    return (
-        <>
-            <div className="reload-button-container">
-                <ReloadButton isLoading={isLoading} reload={loadFromInstagram}/>
-            </div>
-            <div>
-                {sections.map(section => (<Section
-                    key={section.title}
-                    title={section.title}
-                    followersList={section.followersList}
-                    type={section.type}
-                />))}
-            </div>
-        </>
-    );
+    return (<>
+        <ScreenWrapper>
+            <Title>INSTAFOLLOW</Title>
+            <Content>
+                <NavBar>
+                    <ReloadButton isLoading={isLoading} reload={loadFromInstagram}/>
+                    {sections.map(section => (
+                        <InstagramUserTypeButton
+                            key={section.title}
+                            selected={selectedSection?.title === section.title}
+                            onClick={() => setSelectedSection(section)}
+                        >
+                            {section.title}
+                        </InstagramUserTypeButton>
+                    ))}
+                </NavBar>
+                {selectedSection && (
+                    <SectionWrapper>
+                        <Section
+                            key={selectedSection.title}
+                            title={selectedSection.title}
+                            followersList={selectedSection.followersList}
+                            type={selectedSection.type}
+                        />
+                    </SectionWrapper>
+                )}
+            </Content>
+        </ScreenWrapper>
+    </>);
 }
 
 export default App;

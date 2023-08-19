@@ -9,7 +9,7 @@ export function ReloadButton({reload, isLoading}) {
                 (
                     <Loader width={20} height={20} type="Oval" color="#00BFFF"/>
                 ) : (
-                    <>Reload</>
+                    <img src="/refresh.svg" alt="refresh" width={10} height={10}/>
                 )
             }
         </button>);
