@@ -24,6 +24,8 @@ export function Section({title, followersList, type}) {
                                 username={user.username}
                                 fullName={user.fullName}
                                 profilePicUrl={user.profilePicUrl}
+                                userId={user.userId}
+                                isPrivate={user.isPrivate}
                                 type={type}
                                 isNew={user.isNew}
                                 key={user.username}

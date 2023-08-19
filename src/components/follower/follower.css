@@ -7,6 +7,7 @@
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     position: relative;
     user-select: auto;
     width: 20vw;
@@ -30,6 +31,7 @@
 }
 
 .details-section {
+    margin-left: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -69,11 +71,11 @@
 }
 
 .followingThatAreNotFollowers, .followingThatAreNotFollowers .profile-pic:hover {
-    border-color: red;
+    border-color: var(--not-following-color);
 }
 
 .user-wrapper:hover.followingThatAreNotFollowers {
-    background: red;
+    background: var(--not-following-color);
 }
 
 .followersThatAreNotFollowing, .followersThatAreNotFollowing .profile-pic:hover {
@@ -95,11 +97,17 @@
 }
 
 .new-user {
-    position: absolute;
-    top: 30px;
-    right: 85px;
-    color: red;
-    border: 2px solid red;
+    height: fit-content;
+    color: var(--new-color);
+    border: 2px solid var(--new-color);
     border-radius: 10px;
     padding: 0 5px;
+}
+
+.lock {
+    position: absolute;
+    top: 20px;
+    left:10px;
+    width: 15px;
+    color: #bbbbbb;
 }

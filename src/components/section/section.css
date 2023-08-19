@@ -9,7 +9,7 @@
 }
 
 .section:nth-child(1) .title:hover {
-    background: red;
+    background: #b20000;
 }
 
 .section:nth-child(2) .title:hover {

@@ -85,9 +85,9 @@ function App() {
         [...newFollowers, ...newFollowing, ...newFollowingThatAreNotFollowers, ...newFollowersThatAreNotFollowing].forEach(setNewFlag);
     }
 
-    async function loadFromInstagram(instagram) {
+    async function loadFromInstagram() {
         setIsLoading(true);
-        instagram = await instagramRequests.getFollowersAndFollowing();
+        const instagram = await instagramRequests.getFollowersAndFollowing();
         instagram.followingThatAreNotFollowers = findDiffRight(instagram.followers, instagram.following);
         instagram.followersThatAreNotFollowing = findDiffRight(instagram.following, instagram.followers);
         setNewUsers(instagram);
