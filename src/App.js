@@ -51,14 +51,14 @@ function App() {
         [...followers, ...following, ...followingThatAreNotFollowers, ...followersThatAreNotFollowing].forEach(clearNew);
     }
 
-    function setNewUsers(oldFollowers) {
+    function markNewUsers(oldFollowers) {
         instagramUsersUtils.getNewUsers(oldFollowers, instafollow).forEach(user => user.isNew = true);
     }
 
     async function loadFromInstagram() {
         setIsLoading(true);
         const instagram = await instagramRequests.getFollowersAndFollowing();
-        setNewUsers(instagram);
+        markNewUsers(instagram);
         localStorage.saveInstagramFollowers(instagram);
         setInstafollow({
             followers: instagram.followers,
