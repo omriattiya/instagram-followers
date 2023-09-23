@@ -1,4 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
+import _ from 'lodash';
 import {instagramRequests} from "./services/instagramRequests";
 import {localStorage} from "./services/localStorage";
 import {Section} from "./components/section/Section";
@@ -10,7 +11,6 @@ import {
     Content,
     InstagramUserTypeButton,
     NavBar,
-    ReloadContainer,
     ScreenWrapper,
     SectionWrapper,
     Title
@@ -23,7 +23,6 @@ function App() {
     });
 
     const [isLoading, setIsLoading] = useState(false);
-
     const [selectedSection, setSelectedSection] = useState(null);
 
     useEffect(() => {
@@ -42,6 +41,10 @@ function App() {
             setIsLoading(false);
         }
     }, []);
+
+    useEffect(() => {
+        setSelectedSection(_.find(sections, {title: selectedSection?.title}) || _.first(sections));
+    }, [instafollow]);
 
     const sections = useMemo(() => ([{
         title: 'Don\'t Follow Back',
