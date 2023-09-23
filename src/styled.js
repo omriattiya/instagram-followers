@@ -1,14 +1,5 @@
 import styled from 'styled-components';
 
-export const ReloadContainer = styled.div`
-  margin: 40px;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  z-index: 999;
-`;
-
-
 export const ScreenWrapper = styled.div`
   display: flex;
   flex-direction: column;

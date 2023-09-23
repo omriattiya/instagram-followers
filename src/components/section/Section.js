@@ -16,16 +16,18 @@ export function Section({title, followersList, type, showTitle = false}) {
             {`${title} (${followersList.length})`}
         </div>)}
         <div className="users">
-            {showContent && (followersList.map(user => (<Follower
-                username={user.username}
-                fullName={user.fullName}
-                profilePicUrl={user.profilePicUrl}
-                userId={user.userId}
-                isPrivate={user.isPrivate}
-                type={type}
-                isNew={user.isNew}
-                key={user.username}
-            />)))}
+            {showContent && (followersList.map(user =>
+                (<Follower
+                    username={user.username}
+                    fullName={user.fullName}
+                    profilePicUrl={user.profilePicUrl}
+                    userId={user.userId}
+                    isPrivate={user.isPrivate}
+                    type={type}
+                    isNew={user.isNew}
+                    key={user.username}
+                />)
+            ))}
         </div>
     </div>)
 }
