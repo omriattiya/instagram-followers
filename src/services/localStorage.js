@@ -2,7 +2,7 @@ const FOLLOWERS_KEY = 'followers';
 const FOLLOWING_KEY = 'following';
 const DIFF_FOLLOWING_THAT_ARE_NOT_FOLLOWERS_KEY = 'followingThatAreNotFollowers';
 const DIFF_FOLLOWERS_THAT_ARE_NOT_FOLLOWING_KEY = 'followersThatAreNotFollowing';
-
+const CHECKED_USERS_KEY = 'checkedUsers';
 
 export const localStorage = (function () {
     const localStorage = window.localStorage;
@@ -10,6 +10,8 @@ export const localStorage = (function () {
     return {
         saveInstagramFollowers,
         loadInstagramUsers,
+        loadCheckedUsers,
+        saveCheckedUsers,
     }
 
     function saveFollowers(followers) {
@@ -59,4 +61,13 @@ export const localStorage = (function () {
             followersThatAreNotFollowing: loadFollowersThatAreNotFollowing(),
         }
     }
+
+    function loadCheckedUsers() {
+        return JSON.parse(localStorage.getItem(CHECKED_USERS_KEY)) || [];
+    }
+
+    function saveCheckedUsers(checkUsers) {
+        localStorage.setItem(CHECKED_USERS_KEY, JSON.stringify(checkUsers));
+    }
+
 })();

@@ -15,6 +15,7 @@ import {
     SectionWrapper,
     Title
 } from "./styled";
+import {checkUsersProvider} from "./services/checkUsersProvider";
 
 function App() {
 
@@ -43,7 +44,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        setSelectedSection(_.find(sections, {title: selectedSection?.title}) || _.first(sections));
+        updateSelectedSection(_.find(sections, {title: selectedSection?.title}) || _.first(sections));
     }, [instafollow]);
 
     const sections = useMemo(() => ([{
@@ -69,6 +70,16 @@ function App() {
         instagramUsersUtils.getNewUsers(oldFollowers, instafollow).forEach(user => user.isNew = true);
     }
 
+    function checkUsers(users) {
+        const checkedUsers = checkUsersProvider.get();
+        users.forEach(user => user.isChecked = checkedUsers.includes(user.username))
+    }
+
+    function updateSelectedSection(section) {
+        checkUsers(section.followersList || []);
+        setSelectedSection(section);
+    }
+
     async function loadFromInstagram() {
         setIsLoading(true);
         const instagram = await instagramRequests.getFollowersAndFollowing();
@@ -83,7 +94,6 @@ function App() {
         setIsLoading(false);
     }
 
-
     return (<>
         <ScreenWrapper>
             <Title>INSTAFOLLOW</Title>
@@ -94,7 +104,7 @@ function App() {
                         <InstagramUserTypeButton
                             key={section.title}
                             selected={selectedSection?.title === section.title}
-                            onClick={() => setSelectedSection(section)}
+                            onClick={() => updateSelectedSection(section)}
                         >
                             {section.title}
                         </InstagramUserTypeButton>

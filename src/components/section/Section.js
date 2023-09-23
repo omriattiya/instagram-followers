@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
+import _ from 'lodash';
 import {Follower} from "../follower/Follower";
+import {USER_TYPE} from "../../cosnts/userTypes";
 import './section.css';
+
+const ALLOW_CHECK_TYPES = [USER_TYPE.FOLLOWING_THAT_ARE_NOT_FOLLOWERS];
 
 export function Section({title, followersList, type, showTitle = false}) {
 
@@ -26,6 +30,8 @@ export function Section({title, followersList, type, showTitle = false}) {
                     type={type}
                     isNew={user.isNew}
                     key={user.username}
+                    isChecked={user.isChecked}
+                    allowCheck={_.includes(ALLOW_CHECK_TYPES, type)}
                 />)
             ))}
         </div>

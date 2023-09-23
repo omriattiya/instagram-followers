@@ -1,21 +1,37 @@
 import React, {useState} from 'react';
 import './follower.css';
 import {Checkbox} from "./styled";
+import {checkUsersProvider} from "../../services/checkUsersProvider";
 
 const INSTAGRAM_ADDRESS = 'https://www.instagram.com';
 
-export function Follower({username, fullName, profilePicUrl, type, isNew = false, isPrivate, userId}) {
+export function Follower(
+    {
+        username,
+        fullName,
+        profilePicUrl,
+        type,
+        isNew = false,
+        isPrivate,
+        userId,
+        isChecked,
+        allowCheck
+    }) {
 
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(isChecked);
 
     function generateProfileLink() {
         return `${INSTAGRAM_ADDRESS}/${username}`;
     }
 
     function toggleCheck(event) {
-        event.stopPropagation();
         event.preventDefault();
         setChecked(!checked);
+        if (checked) {
+            checkUsersProvider.uncheckUser(username);
+        } else {
+            checkUsersProvider.checkUser(username);
+        }
     }
 
     const checkSrc = checked ? '/selection-box-on.svg' : '/selection-box-off.svg';
@@ -34,7 +50,9 @@ export function Follower({username, fullName, profilePicUrl, type, isNew = false
                     </div>
                     {isPrivate && <img src="/lock-gray.svg" className="lock" alt="lock"/>}
                     {isNew && <div className="new-user"> new! </div>}
-                    <Checkbox src={checkSrc} onClick={toggleCheck} checked={checked}/>
+                    {allowCheck &&
+                        <Checkbox src={checkSrc} onClick={toggleCheck} checked={checked}/>
+                    }
                 </div>
             </a>
         </div>
